@@ -42,7 +42,7 @@ state ProjectileFireMode
             {
                 BestAim = MinAim;
                 for (V = Level.Game.VehicleList; V != None; V = V.NextVehicle)
-                    if ((V.bCanFly || V.IsA('ONSHoverCraft')) && V != Instigator && Instigator.GetTeamNum() != V.GetTeamNum())
+                    if (V.Health > 0 && (V.bCanFly || V.IsA('ONSHoverCraft')) && V != Instigator && Instigator.GetTeamNum() != V.GetTeamNum())
                     {
                         CurAim = Normal(V.Location - WeaponFireLocation) dot vector(WeaponFireRotation);
                         if (CurAim > BestAim && Instigator.FastTrace(V.Location, Instigator.Location))
@@ -77,9 +77,12 @@ defaultproperties
 {
 	//===========================
 	// @100GPing100
-	FireSoundClass = Sound'UT3RaptorBeta1.Sounds.Fire';
-	AltFireSoundClass = Sound'UT3RaptorBeta1.Sounds.FireRocket';
-	HomingSound = Sound'UT3RaptorBeta1.Sounds.LockOn';
+	FireSoundClass = Sound'UT3RaptorRC1.Sounds.Fire';
+	AltFireSoundClass = Sound'UT3RaptorRC1.Sounds.FireRocket';
+	HomingSound = Sound'UT3RaptorRC1.Sounds.LockOn';
+	WeaponFireAttachmentBone = 'Fuselage';
+	WeaponFireOffset = 150;
+	DualFireOffset = 35;
 	// @100GPing100
 	//============EDN============
 	FireInterval    = 0.2

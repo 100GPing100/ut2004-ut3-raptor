@@ -1,7 +1,7 @@
-Unreal Tournament III Raptor imported to Unreal Tournament 2004, Beta 1.
+Unreal Tournament III Raptor imported to Unreal Tournament 2004, Release Candidate 1.
 
 _Copyright:_
-» Ze Luis '100GPing100' (Some code and visuals).
+» Ze Luis '100GPing100' (Coding and visuals).
 » Wormbo (Coding).
 » GreatEmerald (Coding).
 » Epic Games (Meshes, Sounds, Textures).

@@ -1,0 +1,2 @@
+Mutator=(ClassName=UT3RaptorRC1.Mut_UT3Raptor,GroupName=Raptor,IconMaterialName=MutatorArt.nosym,FriendlyName=UT3RaptorRC1.Mut_UT3Raptor.FriendlyName,Description=UT3RaptorRC1.Mut_UT3Raptor.Description,FriendlyName=UT3RaptorRC1.Mut_UT3Raptor.FriendlyName,FallbackName="UT3 Raptor",FallbackDesc="This mutator replaces the Raptor with the one from UT3.")
+Vehicle=(ClassName=UT3RaptorRC1.UT3Raptor,FriendlyName=UT3RaptorRC1.UT3Raptor.VehicleNameString,FallbackName="UT3 Raptor",FallbackDesc="UT3 Raptor")

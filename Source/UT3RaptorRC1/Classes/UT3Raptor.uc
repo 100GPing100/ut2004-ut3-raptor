@@ -35,10 +35,44 @@ var Rotator RuddersRotation;
 //
 event PostBeginPlay()
 {
-	SetBoneRotation('Rt_Wing', rot(16384,0,0), 0, 1);
-	SetBoneRotation('Lft_Wing', rot(16384,0,0), 0, 1);
+	WingsRotation = rot(16384,0,0);
+	
+	SetBoneRotation('Rt_Wing', WingsRotation, 0, 1);
+	SetBoneRotation('Lft_Wing', WingsRotation, 0, 1);
 	
 	Super.PostBeginPlay();
+}
+
+//
+// Called when the driver leaves the vehicle.
+//
+function bool KDriverLeave(bool bForceLeave)
+{
+	SetTimer(0.05, true);
+	
+	return super.KDriverLeave(bForceLeave);
+}
+
+//
+// Close the wings after the driver leaves.
+//
+event Timer()
+{
+	if (WingsRotation.Pitch < 16384)
+	{
+		WingsRotation.Pitch += WingsRPS * 0.05 * 100;
+		if (WingsRotation.Pitch > 16384)
+		{
+			WingsRotation.Pitch = 16384;
+			SetTimer(0, false);
+		}
+	}
+	
+	WingsRotation.Yaw = 0;
+	WingsRotation.Roll = 0;
+	
+	SetBoneRotation('Rt_Wing', WingsRotation, 0, 1);
+	SetBoneRotation('Lft_Wing', WingsRotation, 0, 1);
 }
 
 //
@@ -131,8 +165,6 @@ function Rudders(float DeltaTime)
 	// Apply the new rotation.
 	SetBoneRotation('Rudder_Rt', RuddersRotation, 0, 1);
 	SetBoneRotation('Rudder_left', RuddersRotation, 0, 1);
-	
-	// @100GPing100: Finally it's working...
 }
 
 //
@@ -149,8 +181,8 @@ function Guns()
 }
 
 //
-// The next 3 functions (Died, Destroyed, DrivingStatusChanged) have been overriden
-// to disable the streams.
+// The next 3 functions { Died, Destroyed, DrivingStatusChanged } have been
+// overriden to disable the streams.
 //
 function Died(Controller Killer, class<DamageType> DmgType, Vector HitLocation)
 {
@@ -178,13 +210,10 @@ simulated function Destroyed()
 }
 simulated event DrivingStatusChanged()
 {
-	local Vector RotX, RotY, RotZ;
 	local int i;
 	
 	if (bDriving && Level.NetMode != NM_DedicatedServer && !bDropDetail)
 	{
-        GetAxes(Rotation,RotX,RotY,RotZ);
-
         if (TrailEffects.Length == 0)
         {
             TrailEffects.Length = TrailEffectPositions.Length;
@@ -213,7 +242,7 @@ simulated event DrivingStatusChanged()
 	Super(ONSChopperCraft).DrivingStatusChanged();
 }
 // @100GPing100
-//============EDN============
+//============END============
 
 
 //=============================================================================
@@ -242,26 +271,26 @@ defaultproperties
 	
 	VehiclePositionString = "in a UT3 Raptor";
 	
-	DriverWeapons[0] = (WeaponClass=class'UT3RaptorWeapon',WeaponBone=rt_gun)
+	DriverWeapons[0] = (WeaponClass=class'UT3RaptorWeapon',WeaponBone=Fuselage)
 	
 	WingsRPS = 182; // 182 ~= 1º
 	
 	// Sounds.
-	IdleSound = Sound'UT3RaptorBeta1.Sounds.Engine';
-	StartUpSound = Sound'UT3RaptorBeta1.Sounds.EngineStart';
-	ShutDownSound = Sound'UT3RaptorBeta1.Sounds.EngineStop';
-	ImpactDamageSounds(0) = Sound'UT3RaptorBeta1.Sounds.Impact01';
-	ImpactDamageSounds(1) = Sound'UT3RaptorBeta1.Sounds.Impact02';
-	ImpactDamageSounds(2) = Sound'UT3RaptorBeta1.Sounds.Impact01';
-	ImpactDamageSounds(3) = Sound'UT3RaptorBeta1.Sounds.Impact02';
-	ImpactDamageSounds(4) = Sound'UT3RaptorBeta1.Sounds.Impact01';
-	ImpactDamageSounds(5) = Sound'UT3RaptorBeta1.Sounds.Impact02';
-	ImpactDamageSounds(6) = Sound'UT3RaptorBeta1.Sounds.Impact01';
-	ExplosionSounds(0) = Sound'UT3RaptorBeta1.Sounds.Explode';
-	ExplosionSounds(1) = Sound'UT3RaptorBeta1.Sounds.Explode';
-	ExplosionSounds(2) = Sound'UT3RaptorBeta1.Sounds.Explode';
-	ExplosionSounds(3) = Sound'UT3RaptorBeta1.Sounds.Explode';
-	ExplosionSounds(4) = Sound'UT3RaptorBeta1.Sounds.Explode';
+	IdleSound = Sound'UT3RaptorRC1.Sounds.Engine';
+	StartUpSound = Sound'UT3RaptorRC1.Sounds.EngineStart';
+	ShutDownSound = Sound'UT3RaptorRC1.Sounds.EngineStop';
+	ImpactDamageSounds(0) = Sound'UT3RaptorRC1.Sounds.Impact01';
+	ImpactDamageSounds(1) = Sound'UT3RaptorRC1.Sounds.Impact02';
+	ImpactDamageSounds(2) = Sound'UT3RaptorRC1.Sounds.Impact01';
+	ImpactDamageSounds(3) = Sound'UT3RaptorRC1.Sounds.Impact02';
+	ImpactDamageSounds(4) = Sound'UT3RaptorRC1.Sounds.Impact01';
+	ImpactDamageSounds(5) = Sound'UT3RaptorRC1.Sounds.Impact02';
+	ImpactDamageSounds(6) = Sound'UT3RaptorRC1.Sounds.Impact01';
+	ExplosionSounds(0) = Sound'UT3RaptorRC1.Sounds.Explode';
+	ExplosionSounds(1) = Sound'UT3RaptorRC1.Sounds.Explode';
+	ExplosionSounds(2) = Sound'UT3RaptorRC1.Sounds.Explode';
+	ExplosionSounds(3) = Sound'UT3RaptorRC1.Sounds.Explode';
+	ExplosionSounds(4) = Sound'UT3RaptorRC1.Sounds.Explode';
 	// @100GPing100
 	//============EDN============
 	VehicleNameString = "UT3 Raptor"
